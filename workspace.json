@@ -1,0 +1,125 @@
+{
+  "version": 2,
+  "cli": {
+    "defaultCollection": "@nrwl/react"
+  },
+  "generators": {
+    "@nrwl/react": {
+      "application": {
+        "style": "scss",
+        "linter": "eslint",
+        "babel": true
+      },
+      "component": {
+        "style": "scss"
+      },
+      "library": {
+        "style": "scss",
+        "linter": "eslint"
+      }
+    }
+  },
+  "defaultProject": "nx-test-app",
+  "projects": {
+    "nx-test-app": {
+      "root": "apps/nx-test-app",
+      "sourceRoot": "apps/nx-test-app/src",
+      "projectType": "application",
+      "targets": {
+        "build": {
+          "executor": "@nrwl/web:build",
+          "outputs": ["{options.outputPath}"],
+          "options": {
+            "outputPath": "dist/apps/nx-test-app",
+            "index": "apps/nx-test-app/src/index.html",
+            "main": "apps/nx-test-app/src/main.tsx",
+            "polyfills": "apps/nx-test-app/src/polyfills.ts",
+            "tsConfig": "apps/nx-test-app/tsconfig.app.json",
+            "assets": [
+              "apps/nx-test-app/src/favicon.ico",
+              "apps/nx-test-app/src/assets"
+            ],
+            "styles": ["apps/nx-test-app/src/styles.scss"],
+            "scripts": [],
+            "webpackConfig": "@nrwl/react/plugins/webpack"
+          },
+          "configurations": {
+            "production": {
+              "fileReplacements": [
+                {
+                  "replace": "apps/nx-test-app/src/environments/environment.ts",
+                  "with": "apps/nx-test-app/src/environments/environment.prod.ts"
+                }
+              ],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractCss": true,
+              "namedChunks": false,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "2mb",
+                  "maximumError": "5mb"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "executor": "@nrwl/web:dev-server",
+          "options": {
+            "buildTarget": "nx-test-app:build"
+          },
+          "configurations": {
+            "production": {
+              "buildTarget": "nx-test-app:build:production"
+            }
+          }
+        },
+        "lint": {
+          "executor": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": ["apps/nx-test-app/**/*.{ts,tsx,js,jsx}"]
+          }
+        },
+        "test": {
+          "executor": "@nrwl/jest:jest",
+          "outputs": ["coverage/apps/nx-test-app"],
+          "options": {
+            "jestConfig": "apps/nx-test-app/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
+    },
+    "nx-test-app-e2e": {
+      "root": "apps/nx-test-app-e2e",
+      "sourceRoot": "apps/nx-test-app-e2e/src",
+      "projectType": "application",
+      "targets": {
+        "e2e": {
+          "executor": "@nrwl/cypress:cypress",
+          "options": {
+            "cypressConfig": "apps/nx-test-app-e2e/cypress.json",
+            "tsConfig": "apps/nx-test-app-e2e/tsconfig.e2e.json",
+            "devServerTarget": "nx-test-app:serve"
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "nx-test-app:serve:production"
+            }
+          }
+        },
+        "lint": {
+          "executor": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": ["apps/nx-test-app-e2e/**/*.{js,ts}"]
+          }
+        }
+      }
+    }
+  }
+}
