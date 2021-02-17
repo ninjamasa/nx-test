@@ -1,9 +1,14 @@
 {
   "npmScope": "nx-test",
-  "affected": { "defaultBase": "master" },
+  "affected": {
+    "defaultBase": "master"
+  },
   "implicitDependencies": {
     "workspace.json": "*",
-    "package.json": { "dependencies": "*", "devDependencies": "*" },
+    "package.json": {
+      "dependencies": "*",
+      "devDependencies": "*"
+    },
     "tsconfig.base.json": "*",
     "tslint.json": "*",
     ".eslintrc.json": "*",
@@ -11,12 +16,29 @@
   },
   "tasksRunnerOptions": {
     "default": {
-      "runner": "@nrwl/workspace/tasks-runners/default",
-      "options": { "cacheableOperations": ["build", "lint", "test", "e2e"] }
+      "runner": "@nrwl/nx-cloud",
+      "options": {
+        "cacheableOperations": [
+          "build",
+          "lint",
+          "test",
+          "e2e"
+        ],
+        "accessToken": "YjI5OTk4NDktNzg4My00ZTMyLWIwNmYtNzA4NmZiNDkzODczfHJlYWQtd3JpdGU=",
+        "canTrackAnalytics": false,
+        "showUsageWarnings": true
+      }
     }
   },
   "projects": {
-    "nx-test-app": { "tags": [] },
-    "nx-test-app-e2e": { "tags": [], "implicitDependencies": ["nx-test-app"] }
+    "nx-test-app": {
+      "tags": []
+    },
+    "nx-test-app-e2e": {
+      "tags": [],
+      "implicitDependencies": [
+        "nx-test-app"
+      ]
+    }
   }
 }
